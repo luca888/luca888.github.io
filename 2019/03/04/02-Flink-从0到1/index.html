@@ -201,6 +201,7 @@
 <li>Flink提供的最高级抽象是SQL。这种抽象在语义和表达方面类似于Table API，但是将程序表示为SQL查询表达式。在SQL抽象与表API紧密地相互作用，和SQL查询可以通过定义表来执行表API。</li>
 </ul>
 </blockquote>
+<a id="more"></a>
 <h2 id="程序和数据流"><a href="#程序和数据流" class="headerlink" title="######程序和数据流"></a>######程序和数据流</h2><p>Flink程序的基本构建块是流和转换。（请注意，Flink的DataSet API中使用的DataSet也是内部流 - 稍后会详细介绍。）从概念上讲，流是（可能永无止境的）数据记录流，而转换是将一个或多个流作为一个或多个流的操作。输入，并产生一个或多个输出流。</p>
 <p>执行时，Flink程序映射到流数据流，由流和转换运算符组成。每个数据流都以一个或多个源开头，并以一个或多个接收器结束。数据流类似于任意有向无环图 （DAG）。尽管通过迭代结构允许特殊形式的循环 ，但为了简单起见，我们将在大多数情况下对其进行掩饰。</p>
 <p><img src="https://i.imgur.com/c5uVVOW.png" alt><br>通常，程序中的转换与数据流中的运算符之间存在一对一的对应关系。但是，有时一个转换可能包含多个转换运算符。</p>
@@ -419,7 +420,7 @@
     <div class="cube-boxs">
         
         
-        <div class="cube-box-bg ">
+        <div class="cube-box ">
             <a href="/categories/hexo/">#hexo</a>
         </div>
         
@@ -435,12 +436,12 @@
     <div class="cube-boxs">
         
         
-        <div class="cube-box ">
+        <div class="cube-box-bg ">
             <a href="/tags/spark/">#spark</a>
         </div>
         
         
-        <div class="cube-box-bg ">
+        <div class="cube-box ">
             <a href="/tags/sparkSQL/">#sparkSQL</a>
         </div>
         

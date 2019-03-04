@@ -190,35 +190,6 @@
 <blockquote>
 <p><a href="https://flink.apache.org/downloads.html#binaries" target="_blank" rel="noopener">https://flink.apache.org/downloads.html#binaries</a></p>
 </blockquote>
-<p>解压:</p>
-<blockquote>
-<p>tar -zxvf flink-*.tgz</p>
-</blockquote>
-<blockquote>
-<p>cd flink-1.7.1</p>
-</blockquote>
-<p>启动:</p>
-<p>打开cmd:</p>
-<blockquote>
-<p>cd flink-1.7.1\bin</p>
-</blockquote>
-<blockquote>
-<p>start-cluster.bat </p>
-</blockquote>
-<p>修改程序获得本地环境:</p>
-<blockquote>
-<pre><code>final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-</code></pre></blockquote>
-<p>替换为:</p>
-<blockquote>
-<pre><code>final StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironment();
-</code></pre></blockquote>
-<p>删除:</p>
-<blockquote>
-<pre><code>env.execute(&quot;Socket Window WordCount&quot;);
-</code></pre></blockquote>
-<p>debug运行程序.</p>
-
         
     </article>
     <footer class="cube-excerpt-footer">
@@ -257,116 +228,6 @@
 <p>cat log/flink-<em>-taskexecutor-</em>.out</p>
 </blockquote>
 <p><img src="https://i.imgur.com/k0vRuio.png" alt></p>
-<h2 id="编写SocketWindowWordCount程序"><a href="#编写SocketWindowWordCount程序" class="headerlink" title="######编写SocketWindowWordCount程序:"></a>######编写SocketWindowWordCount程序:</h2><p>在maven项目中创建SocketWindowWordCount.java:</p>
-<pre><code>package com.flink.stream;
-
-import org.apache.flink.api.common.functions.FlatMapFunction;
-import org.apache.flink.api.common.functions.ReduceFunction;
-import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.windowing.time.Time;
-import org.apache.flink.util.Collector;
-
-public class SocketWindowWordCount {
-
-public static void main(String[] args) throws Exception {
-
-    // get the execution environment
-    final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-
-    // get input data by connecting to the socket
-    String host = &quot;172.16.101.182&quot;;
-    int port = 9000;
-    DataStream&lt;String&gt; text = env.socketTextStream(host, port);
-
-    // parse the data, group it, window it, and aggregate the counts
-    DataStream&lt;WordWithCount&gt; windowCounts = text
-            .flatMap(new FlatMapFunction&lt;String, WordWithCount&gt;() {
-                @Override
-                public void flatMap(String value, Collector&lt;WordWithCount&gt; out) {
-                    for (String word : value.split(&quot;\\s&quot;)) {
-                        out.collect(new WordWithCount(word, 1L));
-                    }
-                }
-            })
-            .keyBy(&quot;word&quot;)
-            .timeWindow(Time.seconds(5), Time.seconds(1))
-            .reduce(new ReduceFunction&lt;WordWithCount&gt;() {
-                @Override
-                public WordWithCount reduce(WordWithCount a, WordWithCount b) {
-                    return new WordWithCount(a.word, a.count + b.count);
-                }
-            });
-
-    // print the results with a single thread, rather than in parallel
-    windowCounts.print().setParallelism(1);
-
-    env.execute(&quot;Socket Window WordCount&quot;);
-}
-
-// Data type for words with count
-public static class WordWithCount {
-
-    public String word;
-    public long count;
-
-    public WordWithCount() {}
-
-    public WordWithCount(String word, long count) {
-        this.word = word;
-        this.count = count;
-    }
-
-    @Override
-    public String toString() {
-        return word + &quot; : &quot; + count;
-    }
-}
-}
-</code></pre><p>项目结构:</p>
-<p><img src="https://i.imgur.com/YFOq21Q.png" alt></p>
-<h2 id="运行示例"><a href="#运行示例" class="headerlink" title="######运行示例:"></a>######运行示例:</h2><p>现在，我们将运行此Flink应用程序。它将从套接字读取文本，并且每5秒打印一次前5秒内每个不同单词的出现次数，即处理时间的翻滚窗口，只要文字漂浮在其中。</p>
-<ul>
-<li>首先，我们使用netcat来启动本地服务器</li>
-</ul>
-<blockquote>
-<p>nc -l 9000</p>
-</blockquote>
-<ul>
-<li>提交Flink</li>
-</ul>
-<p>项目打包后把jar包上传到<code>flink-1.7.1/examples/streaming/</code> 目录下:</p>
-<p><img src="https://i.imgur.com/ZXL9zOL.png" alt></p>
-<p>另开一个窗口,提交任务:</p>
-<blockquote>
-<p>cd flink-1.7.1</p>
-</blockquote>
-<blockquote>
-<p>./bin/flink run -c com.flink.stream.SocketWindowWordCount examples/streaming/flink-1.0-SNAPSHOT.jar </p>
-</blockquote>
-<p>-c:指定运行的任务</p>
-<p>在nc窗口输入:</p>
-<p><img src="https://i.imgur.com/fP0UAKq.png" alt></p>
-<p>查看运行结果:</p>
-<blockquote>
-<p>cat log/flink-<em>-taskexecutor-</em>.out</p>
-</blockquote>
-<p><img src="https://i.imgur.com/u1duXIe.png" alt></p>
-<h2 id="用flink-ui的方式提交任务"><a href="#用flink-ui的方式提交任务" class="headerlink" title="######用flink-ui的方式提交任务:"></a>######用flink-ui的方式提交任务:</h2><ul>
-<li>首先，我们使用netcat来启动本地服务器</li>
-</ul>
-<blockquote>
-<p>nc -l 9000</p>
-</blockquote>
-<p>访问localhost:8081:</p>
-<p><img src="https://i.imgur.com/u65Sbb7.png" alt></p>
-<p>选择 submit new job &gt; add new 添加项目jar:</p>
-<p><img src="https://i.imgur.com/9HkTLH9.png" alt></p>
-<p>upload &gt; 选中项目  &gt;填写 entry class </p>
-<p><img src="https://i.imgur.com/VkUaGWh.png" alt></p>
-<p>submit :</p>
-<p><img src="https://i.imgur.com/ptFCnvq.png" alt></p>
-
         
     </article>
     <footer class="cube-excerpt-footer">
@@ -400,23 +261,6 @@ public static class WordWithCount {
 <blockquote>
 <p>mvn archetype:generate<br>     -DarchetypeGroupId=org.apache.flink<br>     -DarchetypeArtifactId=flink-quickstart-java<br>     -DarchetypeVersion=1.7.1</p>
 </blockquote>
-<p>建设项目:</p>
-<blockquote>
-<p>mvn clean package</p>
-</blockquote>
-<p>打包完成后在target目录下会生成jar文件.</p>
-<ul>
-<li>方法二</li>
-</ul>
-<p>使用开发工具创建maven项目:</p>
-<p>点击 file &gt; new &gt; project</p>
-<p><img src="https://i.imgur.com/aVfKDq0.png" alt></p>
-<p>点击maven &gt; create from archetype &gt; flink-quickstart-java<br><img src="https://i.imgur.com/EjRJw7D.png" alt></p>
-<p>如果没有flink-quickstart-java点击 add archetype</p>
-<p><img src="https://i.imgur.com/1LpWaUw.png" alt></p>
-<p>一直next直到finish,项目结构如下:</p>
-<p><img src="https://i.imgur.com/YsO2OOh.png" alt></p>
-
         
     </article>
     <footer class="cube-excerpt-footer">
@@ -460,63 +304,6 @@ public static class WordWithCount {
 <blockquote>
 <p>Java HotSpot(TM) 64-Bit Server VM (build 25.111-b14, mixed mode)</p>
 </blockquote>
-<p>######下载<br>下载页面:</p>
-<blockquote>
-<p><a href="https://flink.apache.org/downloads.html#binaries" target="_blank" rel="noopener">https://flink.apache.org/downloads.html#binaries</a></p>
-</blockquote>
-<p>下载后进行解压:</p>
-<blockquote>
-<p>tar -zxvf flink-*.tgz</p>
-</blockquote>
-<blockquote>
-<p>cd flink-1.7.1</p>
-</blockquote>
-<p>######启动</p>
-<blockquote>
-<p>./bin/start-cluster.sh  # Start Flink</p>
-</blockquote>
-<p>打开浏览器访问localhost:8081,出现如下页面启动成功:<br><img src="https://i.imgur.com/sP1OZQn.png" alt></p>
-<p>也可以通过检查logs目录中的日志文件来验证系统是否正在运行：</p>
-<blockquote>
-<p>$ tail log/flink-<em>-standalonesession-</em>.log</p>
-</blockquote>
-<blockquote>
-<p>INFO … - Rest endpoint listening at localhost:8081</p>
-</blockquote>
-<blockquote>
-<p>INFO … - <a href="http://localhost:8081" target="_blank" rel="noopener">http://localhost:8081</a> was granted </p>
-</blockquote>
-<blockquote>
-<p>leadership …</p>
-</blockquote>
-<blockquote>
-<p>INFO … - Web frontend listening at <a href="http://localhost:8081" target="_blank" rel="noopener">http://localhost:8081</a>.</p>
-</blockquote>
-<blockquote>
-<p>INFO … - Starting RPC endpoint for StandaloneResourceManager at akka://flink/user/resourcemanager .</p>
-</blockquote>
-<blockquote>
-<p>INFO … - Starting RPC endpoint for StandaloneDispatcher at akka://flink/user/dispatcher .</p>
-</blockquote>
-<blockquote>
-<p>INFO … - ResourceManager akka.tcp://flink@localhost:6123/user/resourcemanager was granted leadership …</p>
-</blockquote>
-<blockquote>
-<p>INFO … - Starting the SlotManager.</p>
-</blockquote>
-<blockquote>
-<p>INFO … - Dispatcher akka.tcp://flink@localhost:6123/user/dispatcher was granted leadership …</p>
-</blockquote>
-<blockquote>
-<p>INFO … - Recovering all persisted jobs.</p>
-</blockquote>
-<blockquote>
-<p>INFO … - Registering TaskManager … under … at the SlotManager.</p>
-</blockquote>
-<h2 id="停止"><a href="#停止" class="headerlink" title="######停止"></a>######停止</h2><blockquote>
-<p>./bin/stop-cluster.sh</p>
-</blockquote>
-
         
     </article>
     <footer class="cube-excerpt-footer">
@@ -545,29 +332,7 @@ public static class WordWithCount {
 <p>######Tasks and Operator Chains</p>
 <p>对于分布式执行，弗林克链运营商子任务一起放入任务。每个任务由一个线程执行。将运营商链接到任务是一项有用的优化：它可以减少线程到线程切换和缓冲的开销，并在降低延迟的同时提高整体吞吐量。可以配置链接行为; </p>
 <p>下图中的示例数据流由五个子任务执行，因此具有五个并行线程。<br><img src="https://i.imgur.com/1h1FWgz.png" alt></p>
-<h2 id="Job-Managers-Task-Managers-Clients"><a href="#Job-Managers-Task-Managers-Clients" class="headerlink" title="######Job Managers, Task Managers, Clients"></a>######Job Managers, Task Managers, Clients</h2><p>Flink运行时包含两种类型的进程：</p>
-<ul>
-<li><p>该JobManagers（也称为masters）协调分布式执行。他们安排任务，协调检查点，协调故障恢复等。</p>
-</li>
-<li><p>该TaskManagers（也叫workers）执行任务（或者更具体地说，子任务）的数据流，以及缓冲器和交换数据流。<br>必须始终至少有一个TaskManager。</p>
-</li>
-</ul>
-<p>JobManagers和TaskManagers可以通过多种方式启动：作为独立集群直接在计算机上，在容器中，或由YARN或Mesos等资源框架管理。TaskManagers连接到JobManagers，宣布自己可用，并被分配工作。</p>
-<p>client 是不运行时和程序执行的一部分，而是被用来准备和发送的数据流的JobManager。之后，客户端可以断开连接或保持连接以接收进度报告。客户端既可以作为触发执行的Java / Scala程序的一部分运行，也可以在命令行进程中运行./bin/flink run …。<br><img src="https://i.imgur.com/3QQx6bM.png" alt></p>
-<h2 id="Task-Slots-and-Resources"><a href="#Task-Slots-and-Resources" class="headerlink" title="######Task Slots and Resources"></a>######Task Slots and Resources</h2><p>每个worker（TaskManager）都是一个JVM进程，可以在不同的线程中执行一个或多个子任务。为了控制工人接受的任务数量，工人有所谓的任务槽（至少一个）。</p>
-<p>每个任务槽代表TaskManager的固定资源子集。例如，具有三个插槽的TaskManager将其1/3的托管内存专用于每个插槽。切换资源意味着子任务不会与来自其他作业的子任务竞争托管内存，而是具有一定量的保留托管内存。请注意，这里没有CPU隔离; 当前插槽只分离任务的托管内存。</p>
-<p>通过调整任务槽的数量，用户可以定义子任务如何相互隔离。每个TaskManager有一个插槽意味着每个任务组在一个单独的JVM中运行（例如，可以在一个单独的容器中启动）。拥有多个插槽意味着更多子任务共享同一个JVM。同一JVM中的任务共享TCP连接（通过多路复用）和心跳消息。它们还可以共享数据集和数据结构，从而减少每任务开销。<br><img src="https://i.imgur.com/f4DF9rJ.png" alt></p>
-<p>默认情况下，Flink允许子任务共享插槽，即使它们是不同任务的子任务，只要它们来自同一个作业。结果是一个槽可以保存作业的整个管道。允许此插槽共享有两个主要好处：</p>
-<ul>
-<li>Flink集群需要与作业中使用的最高并行度一样多的任务槽。无需计算程序总共包含多少任务（具有不同的并行性）。</li>
-<li>更容易获得更好的资源利用率。没有插槽共享，非密集 源/ map（）子任务将阻止与资源密集型窗口子任务一样多的资源。通过插槽共享，将示例中的基本并行性从2增加到6可以充分利用时隙资源，同时确保繁重的子任务在TaskManagers之间公平分配。</li>
-</ul>
-<p><img src="https://i.imgur.com/pGxEyYX.png" alt></p>
-<h2 id="State-Backends"><a href="#State-Backends" class="headerlink" title="######State Backends"></a>######State Backends</h2><p>存储键/值索引的确切数据结构取决于所选的状态后端。一个状态后端将数据存储在内存中的哈希映射中，另一个状态后端使用RocksDB作为键/值存储。除了定义保存状态的数据结构之外，状态后端还实现逻辑以获取键/值状态的时间点快照，并将该快照存储为检查点的一部分。<br><img src="https://i.imgur.com/VCx554j.png" alt></p>
-<h2 id="Savepoints"><a href="#Savepoints" class="headerlink" title="######Savepoints"></a>######Savepoints</h2><p>用Data Stream API编写的程序可以从保存点恢复执行。保存点允许更新程序和Flink群集，而不会丢失任何状态。</p>
-<p>保存点是手动触发的检查点，它捕获程序的快照并将其写入状态后端。他们依靠常规的检查点机制。在执行期间，程序会定期在工作节点上创建快照并生成检查点。对于恢复，仅需要最后完成的检查点，并且一旦完成新检查点，就可以安全地丢弃旧检查点。</p>
-<p>保存点与这些定期检查点类似，不同之处在于它们由用户触发，并且在较新的检查点完成时不会自动过期。可以从命令行创建保存点，也可以通过REST API取消作业。</p>
-
+<p>######Job Managers, Task Managers, Clients</p>
         
     </article>
     <footer class="cube-excerpt-footer">
@@ -594,34 +359,6 @@ public static class WordWithCount {
         
            <h6 id="什么是Apche-Flink"><a href="#什么是Apche-Flink" class="headerlink" title="什么是Apche Flink"></a>什么是Apche Flink</h6><p>Apache Flink是一个框架和分布式处理引擎，用于对无界和有界数据流进行状态计算。Flink设计为在所有常见的集群环境中运行，以内存速度和任何规模执行计算。</p>
 <p>######处理无界和有界数据<br>任何类型的数据都是作为事件流产生的。信用卡交易，传感器测量，机器日志或网站或移动应用程序上的用户交互，所有这些数据都作为流生成。</p>
-<p>数据可以作为无界或有界流处理。</p>
-<blockquote>
-<ul>
-<li><code>无界流</code>有一个开始但没有定义的结束。它们不会在生成时终止并提供数据。必须连续处理无界流，即必须在摄取事件后立即处理事件。无法等待所有输入数据到达，因为输入是无界的，并且在任何时间点都不会完成。处理无界数据通常要求以特定顺序摄取事件，例如事件发生的顺序，以便能够推断结果完整性。</li>
-</ul>
-</blockquote>
-<blockquote>
-<ul>
-<li><code>有界流</code>具有定义的开始和结束。可以在执行任何计算之前通过摄取所有数据来处理有界流。处理有界流不需要有序摄取，因为可以始终对有界数据集进行排序。有界流的处理也称为批处理。</li>
-</ul>
-</blockquote>
-<p><img src="https://i.imgur.com/JoPFYdx.png" alt></p>
-<p>Apache Flink擅长处理无界和有界数据集。精确控制时间和状态使Flink的运行时能够在无界流上运行任何类型的应用程序。有界流由算法和数据结构内部处理，这些算法和数据结构专门针对固定大小的数据集而设计，从而产生出色的性能。</p>
-<p>######随处部署应用程序<br>Apache Flink是一个分布式系统，需要计算资源才能执行应用程序。Flink与所有常见的集群资源管理器（如Hadoop YARN，Apache Mesos和Kubernetes）集成，但也可以设置为作为独立集群运行。</p>
-<p>Flink旨在很好地运作以前列出的每个资源管理器。这是通过特定于资源管理器的部署模式实现的，这些模式允许Flink以其惯用方式与每个资源管理器进行交互。</p>
-<p>部署Flink应用程序时，Flink会根据应用程序配置的并行性自动识别所需资源，并从资源管理器请求它们。如果发生故障，Flink会通过请求新资源来替换发生故障的容器。提交或控制应用程序的所有通信都通过REST调用进行。这简化了Flink在许多环境中的集成。</p>
-<p>######以任何规模运行应用程序<br>Flink旨在以任何规模运行有状态流应用程序。应用程序并行化为数千个在集群中分布和同时执行的任务。因此，应用程序可以利用几乎无限量的CPU，主内存，磁盘和网络IO。而且，Flink很容易保持非常大的应用程序状态。其异步和增量检查点算法确保对处理延迟的影响最小，同时保证一次性状态一致性。</p>
-<p>用户报告了在其生产环境中运行的Flink应用程序令人印象深刻的可扩展性数字，例如</p>
-<blockquote>
-<ul>
-<li>应用程序每天处理数万亿个事件</li>
-<li>应用程序维护多个TB的状态</li>
-<li>应用程序在数千个内核的运行</li>
-</ul>
-</blockquote>
-<p>######利用内存中性能<br>有状态Flink应用程序针对本地状态访问进行了优化。任务状态始终保留在内存中，如果状态大小超过可用内存，则保存在访问高效的磁盘上数据结构中。因此，任务通过访问本地（通常是内存中）状态来执行所有计算，从而产生非常低的处理延迟。Flink通过定期和异步地将本地状态检查点到持久存储来保证在出现故障时的一次状态一致性。</p>
-<p><img src="https://i.imgur.com/A8HVZzU.png" alt></p>
-
         
     </article>
     <footer class="cube-excerpt-footer">
@@ -665,31 +402,6 @@ public static class WordWithCount {
 <li>Flink提供的最高级抽象是SQL。这种抽象在语义和表达方面类似于Table API，但是将程序表示为SQL查询表达式。在SQL抽象与表API紧密地相互作用，和SQL查询可以通过定义表来执行表API。</li>
 </ul>
 </blockquote>
-<h2 id="程序和数据流"><a href="#程序和数据流" class="headerlink" title="######程序和数据流"></a>######程序和数据流</h2><p>Flink程序的基本构建块是流和转换。（请注意，Flink的DataSet API中使用的DataSet也是内部流 - 稍后会详细介绍。）从概念上讲，流是（可能永无止境的）数据记录流，而转换是将一个或多个流作为一个或多个流的操作。输入，并产生一个或多个输出流。</p>
-<p>执行时，Flink程序映射到流数据流，由流和转换运算符组成。每个数据流都以一个或多个源开头，并以一个或多个接收器结束。数据流类似于任意有向无环图 （DAG）。尽管通过迭代结构允许特殊形式的循环 ，但为了简单起见，我们将在大多数情况下对其进行掩饰。</p>
-<p><img src="https://i.imgur.com/c5uVVOW.png" alt><br>通常，程序中的转换与数据流中的运算符之间存在一对一的对应关系。但是，有时一个转换可能包含多个转换运算符。</p>
-<p>源流和接收器记录在流连接器和批处理连接器文档中。DataStream运算符和DataSet转换中记录了转换。</p>
-<h2 id="视窗"><a href="#视窗" class="headerlink" title="######视窗"></a>######视窗</h2><p>聚合事件（例如，计数，总和）在流上的工作方式与批处理方式不同。例如，不可能计算流中的所有元素，因为流通常是无限的（无界）。相反，流上的聚合（计数，总和等）由窗口限定，例如“在最后5分钟内计数”或“最后100个元素的总和”。</p>
-<p>Windows可以是时间驱动的（例如：每30秒）或数据驱动（例如：每100个元素）。人们通常区分不同类型的窗口，例如翻滚窗口（没有重叠）， 滑动窗口（具有重叠）和会话窗口（由不活动间隙打断）。</p>
-<p><img src="https://i.imgur.com/IW6jpfA.png" alt></p>
-<h2 id="时间"><a href="#时间" class="headerlink" title="######时间"></a>######时间</h2><p>当在流程序中引用时间（例如定义窗口）时，可以参考不同的时间概念：</p>
-<ul>
-<li>事件时间是创建事件的时间。它通常由事件中的时间戳描述，例如由生产传感器或生产服务附加。Flink通过时间戳分配器访问事件时间戳。</li>
-<li>摄取时间是事件在源操作员处输入Flink数据流的时间。</li>
-<li>处理时间是执行基于时间的操作的每个操作员的本地时间。</li>
-</ul>
-<p><img src="https://i.imgur.com/4iZHcXu.png" alt></p>
-<h2 id="有状态的操作"><a href="#有状态的操作" class="headerlink" title="######有状态的操作"></a>######有状态的操作</h2><p>虽然数据流中的许多操作只是一次查看一个单独的事件（例如事件解析器），但某些操作会记住多个事件（例如窗口操作符）的信息。这些操作称为有状态。</p>
-<p>状态操作的状态保持在可以被认为是嵌入式键/值存储的状态中。状态被分区并严格地与有状态运营商读取的流一起分发。因此，只有在keyBy（）函数之后才能在键控流上访问键/值状态，并且限制为与当前事件的键相关联的值。对齐流和状态的密钥可确保所有状态更新都是本地操作，从而保证一致性而无需事务开销。此对齐还允许Flink重新分配状态并透明地调整流分区。<br><img src="https://i.imgur.com/3MfA8vs.png" alt></p>
-<h2 id="容错检查点"><a href="#容错检查点" class="headerlink" title="######容错检查点"></a>######容错检查点</h2><p>Flink使用流重放和检查点的组合实现容错。检查点与每个输入流中的特定点以及每个操作符的对应状态相关。通过恢复运算符的状态并从检查点重放事件，可以从检查点恢复流数据流，同时保持一致性（恰好一次处理语义）。</p>
-<p>检查点间隔是在执行期间用恢复时间（需要重放的事件的数量）来折衷容错开销的手段。</p>
-<h2 id="批量流媒体"><a href="#批量流媒体" class="headerlink" title="######批量流媒体"></a>######批量流媒体</h2><p>Flink执行批处理程序作为流程序的特殊情况，其中流是有界的（有限数量的元素）。甲数据集在内部视为数据流。因此，上述概念以相同的方式应用于批处理程序，并且它们适用于流程序，除了少数例外：</p>
-<ul>
-<li>批处理程序的容错不使用检查点。通过完全重放流来进行恢复。这是可能的，因为输入有限。这会使成本更多地用于恢复，但使常规处理更便宜，因为它避免了检查点。</li>
-<li>DataSet API中的有状态操作使用简化的内存/核外数据结构，而不是键/值索引。</li>
-<li>DataSet API引入了特殊的同步（超级步骤）迭代，这些迭代只能在有界流上进行。</li>
-</ul>
-
         
     </article>
     <footer class="cube-excerpt-footer">
@@ -894,7 +606,7 @@ public static class WordWithCount {
     <div class="cube-boxs">
         
         
-        <div class="cube-box-bg ">
+        <div class="cube-box ">
             <a href="/categories/hexo/">#hexo</a>
         </div>
         
@@ -910,12 +622,12 @@ public static class WordWithCount {
     <div class="cube-boxs">
         
         
-        <div class="cube-box ">
+        <div class="cube-box-bg ">
             <a href="/tags/spark/">#spark</a>
         </div>
         
         
-        <div class="cube-box-bg ">
+        <div class="cube-box ">
             <a href="/tags/sparkSQL/">#sparkSQL</a>
         </div>
         
