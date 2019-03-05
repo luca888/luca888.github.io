@@ -166,6 +166,47 @@
     <div class="cube-content">
         <div class="cube-left">
             
+<div class="cube-excerpt" id="cube-excerpt-从0到1学会Apache Flink-单机模式安装">
+    <header class="cube-excerpt-header">
+        <h1><a href="/2019/03/04/04-Flink-从0到1/">从0到1学会Apache Flink-单机模式安装</a></h1>
+        <div class="cube-excerpt-header-msg">
+            <div class="cube-excerpt-date">
+                <i class="cube-icon cube-icon-date" aria-hidden="true"></i>
+                2019-03-04
+            </div>
+            <div class="cube-excerpt-tags">
+                <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
+                
+                <a href="/tags/入门/" class="cube-excerpt-tag-link">#入门</a>
+                
+            </div>
+        </div>
+    </header>
+    <article class="cube-excerpt-entry cube-markdown">
+        
+        
+           <h6 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h6><p>为了能够运行Flink，唯一的要求是安装一个有效的Java 8.x.</p>
+<p>您可以通过发出以下命令来检查Java的正确安装：</p>
+<blockquote>
+<p>java -version</p>
+</blockquote>
+<p>如果你有Java 8，输出将如下所示：</p>
+<blockquote>
+<p>java version “1.8.0_111”</p>
+</blockquote>
+<blockquote>
+<p>Java(TM) SE Runtime Environment (build 1.8.0_111-b14)</p>
+</blockquote>
+<blockquote>
+<p>Java HotSpot(TM) 64-Bit Server VM (build 25.111-b14, mixed mode)</p>
+</blockquote>
+        
+    </article>
+    <footer class="cube-excerpt-footer">
+        <a class="cube-excerpt-more" href="/2019/03/04/04-Flink-从0到1/">Read More</a>
+    </footer>
+</div>
+
 <div class="cube-excerpt" id="cube-excerpt-从0到1学会Apache Flink-分布式运行环境">
     <header class="cube-excerpt-header">
         <h1><a href="/2019/03/04/03-Flink-从0到1/">从0到1学会Apache Flink-分布式运行环境</a></h1>
@@ -185,14 +226,45 @@
     <article class="cube-excerpt-entry cube-markdown">
         
         
-           <p>######Tasks and Operator Chains</p>
-<p>对于分布式执行，弗林克链运营商子任务一起放入任务。每个任务由一个线程执行。将运营商链接到任务是一项有用的优化：它可以减少线程到线程切换和缓冲的开销，并在降低延迟的同时提高整体吞吐量。可以配置链接行为; </p>
+           <h6 id="Tasks-and-Operator-Chains"><a href="#Tasks-and-Operator-Chains" class="headerlink" title="Tasks and Operator Chains"></a>Tasks and Operator Chains</h6><p>对于分布式执行，弗林克链运营商子任务一起放入任务。每个任务由一个线程执行。将运营商链接到任务是一项有用的优化：它可以减少线程到线程切换和缓冲的开销，并在降低延迟的同时提高整体吞吐量。可以配置链接行为; </p>
 <p>下图中的示例数据流由五个子任务执行，因此具有五个并行线程。<br><img src="https://i.imgur.com/1h1FWgz.png" alt></p>
-<p>######Job Managers, Task Managers, Clients</p>
+<h6 id="Job-Managers-Task-Managers-Clients"><a href="#Job-Managers-Task-Managers-Clients" class="headerlink" title="Job Managers, Task Managers, Clients"></a>Job Managers, Task Managers, Clients</h6>
         
     </article>
     <footer class="cube-excerpt-footer">
         <a class="cube-excerpt-more" href="/2019/03/04/03-Flink-从0到1/">Read More</a>
+    </footer>
+</div>
+
+<div class="cube-excerpt" id="cube-excerpt-从0到1学会Apache Flink-调试Flink程序">
+    <header class="cube-excerpt-header">
+        <h1><a href="/2019/03/04/07-Flink-从0到1/">从0到1学会Apache Flink-调试Flink程序</a></h1>
+        <div class="cube-excerpt-header-msg">
+            <div class="cube-excerpt-date">
+                <i class="cube-icon cube-icon-date" aria-hidden="true"></i>
+                2019-03-04
+            </div>
+            <div class="cube-excerpt-tags">
+                <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
+                
+                <a href="/tags/入门/" class="cube-excerpt-tag-link">#入门</a>
+                
+            </div>
+        </div>
+    </header>
+    <article class="cube-excerpt-entry cube-markdown">
+        
+        
+           <h6 id="安装flink本地模式"><a href="#安装flink本地模式" class="headerlink" title="安装flink本地模式"></a>安装flink本地模式</h6><p>以win10为例:</p>
+<p>为了能够运行Flink，唯一的要求是安装一个有效的Java 8.x.</p>
+<p>下载Flink:</p>
+<blockquote>
+<p><a href="https://flink.apache.org/downloads.html#binaries" target="_blank" rel="noopener">https://flink.apache.org/downloads.html#binaries</a></p>
+</blockquote>
+        
+    </article>
+    <footer class="cube-excerpt-footer">
+        <a class="cube-excerpt-more" href="/2019/03/04/07-Flink-从0到1/">Read More</a>
     </footer>
 </div>
 
@@ -215,8 +287,9 @@
     <article class="cube-excerpt-entry cube-markdown">
         
         
-           <p>######环境准备<br>已安装了Maven 3.0.4（或更高版本）和Java 8.x.</p>
-<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="######创建项目:"></a>######创建项目:</h2><ul>
+           <h6 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h6><p>已安装了Maven 3.0.4（或更高版本）和Java 8.x.</p>
+<h6 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h6><hr>
+<ul>
 <li>方法一</li>
 </ul>
 <p>命令行方式创建maven项目:</p>
@@ -249,8 +322,7 @@
     <article class="cube-excerpt-entry cube-markdown">
         
         
-           <p>######运行Flink自带的example:</p>
-<blockquote>
+           <h6 id="运行Flink自带的example"><a href="#运行Flink自带的example" class="headerlink" title="运行Flink自带的example"></a>运行Flink自带的example</h6><blockquote>
 <p>cd flink-1.7.1</p>
 </blockquote>
 <blockquote>
@@ -266,79 +338,6 @@
     </article>
     <footer class="cube-excerpt-footer">
         <a class="cube-excerpt-more" href="/2019/03/04/06-Flink-从0到1/">Read More</a>
-    </footer>
-</div>
-
-<div class="cube-excerpt" id="cube-excerpt-从0到1学会Apache Flink-单机模式安装">
-    <header class="cube-excerpt-header">
-        <h1><a href="/2019/03/04/04-Flink-从0到1/">从0到1学会Apache Flink-单机模式安装</a></h1>
-        <div class="cube-excerpt-header-msg">
-            <div class="cube-excerpt-date">
-                <i class="cube-icon cube-icon-date" aria-hidden="true"></i>
-                2019-03-04
-            </div>
-            <div class="cube-excerpt-tags">
-                <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
-                
-                <a href="/tags/入门/" class="cube-excerpt-tag-link">#入门</a>
-                
-            </div>
-        </div>
-    </header>
-    <article class="cube-excerpt-entry cube-markdown">
-        
-        
-           <p>######环境准备<br>为了能够运行Flink，唯一的要求是安装一个有效的Java 8.x.</p>
-<p>您可以通过发出以下命令来检查Java的正确安装：</p>
-<blockquote>
-<p>java -version</p>
-</blockquote>
-<p>如果你有Java 8，输出将如下所示：</p>
-<blockquote>
-<p>java version “1.8.0_111”</p>
-</blockquote>
-<blockquote>
-<p>Java(TM) SE Runtime Environment (build 1.8.0_111-b14)</p>
-</blockquote>
-<blockquote>
-<p>Java HotSpot(TM) 64-Bit Server VM (build 25.111-b14, mixed mode)</p>
-</blockquote>
-        
-    </article>
-    <footer class="cube-excerpt-footer">
-        <a class="cube-excerpt-more" href="/2019/03/04/04-Flink-从0到1/">Read More</a>
-    </footer>
-</div>
-
-<div class="cube-excerpt" id="cube-excerpt-从0到1学会Apache Flink-调试Flink程序">
-    <header class="cube-excerpt-header">
-        <h1><a href="/2019/03/04/07-Flink-从0到1/">从0到1学会Apache Flink-调试Flink程序</a></h1>
-        <div class="cube-excerpt-header-msg">
-            <div class="cube-excerpt-date">
-                <i class="cube-icon cube-icon-date" aria-hidden="true"></i>
-                2019-03-04
-            </div>
-            <div class="cube-excerpt-tags">
-                <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
-                
-                <a href="/tags/入门/" class="cube-excerpt-tag-link">#入门</a>
-                
-            </div>
-        </div>
-    </header>
-    <article class="cube-excerpt-entry cube-markdown">
-        
-        
-           <p>######安装flink本地模式<br>以win10为例:</p>
-<p>为了能够运行Flink，唯一的要求是安装一个有效的Java 8.x.</p>
-<p>下载Flink:</p>
-<blockquote>
-<p><a href="https://flink.apache.org/downloads.html#binaries" target="_blank" rel="noopener">https://flink.apache.org/downloads.html#binaries</a></p>
-</blockquote>
-        
-    </article>
-    <footer class="cube-excerpt-footer">
-        <a class="cube-excerpt-more" href="/2019/03/04/07-Flink-从0到1/">Read More</a>
     </footer>
 </div>
 
@@ -362,7 +361,7 @@
         
         
            <h6 id="什么是Apche-Flink"><a href="#什么是Apche-Flink" class="headerlink" title="什么是Apche Flink"></a>什么是Apche Flink</h6><p>Apache Flink是一个框架和分布式处理引擎，用于对无界和有界数据流进行状态计算。Flink设计为在所有常见的集群环境中运行，以内存速度和任何规模执行计算。</p>
-<p>######处理无界和有界数据<br>任何类型的数据都是作为事件流产生的。信用卡交易，传感器测量，机器日志或网站或移动应用程序上的用户交互，所有这些数据都作为流生成。</p>
+<p>######处理无界和有界数据 ######<br>任何类型的数据都是作为事件流产生的。信用卡交易，传感器测量，机器日志或网站或移动应用程序上的用户交互，所有这些数据都作为流生成。</p>
         
     </article>
     <footer class="cube-excerpt-footer">
@@ -389,7 +388,7 @@
     <article class="cube-excerpt-entry cube-markdown">
         
         
-           <p>######抽象层次<br>Flink提供不同级别的抽象来开发流/批处理应用程序。<br><img src="https://i.imgur.com/27xeDZP.png" alt></p>
+           <h6 id="抽象层次"><a href="#抽象层次" class="headerlink" title="抽象层次"></a>抽象层次</h6><p>Flink提供不同级别的抽象来开发流/批处理应用程序。<br><img src="https://i.imgur.com/27xeDZP.png" alt></p>
 <blockquote>
 <ul>
 <li><p>最低级抽象只提供有状态流。它 通过Process Function嵌入到DataStream API中。它允许用户自由处理来自一个或多个流的事件，并使用一致的容错状态。此外，用户可以注册事件时间和处理时间回调，允许程序实现复杂的计算。</p>
@@ -541,7 +540,7 @@
                     <span>1</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/03-Flink-从0到1/" title="从0到1学会Apache Flink-分布式运行环境">从0到1学会Apache Flink-分布式运行环境</a>
+                    <a href="/2019/03/04/04-Flink-从0到1/" title="从0到1学会Apache Flink-单机模式安装">从0到1学会Apache Flink-单机模式安装</a>
                 </p>
             </div>
             
@@ -555,7 +554,7 @@
                     <span>2</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/05-Flink-从0到1/" title="从0到1学会Apache Flink-创建项目">从0到1学会Apache Flink-创建项目</a>
+                    <a href="/2019/03/04/03-Flink-从0到1/" title="从0到1学会Apache Flink-分布式运行环境">从0到1学会Apache Flink-分布式运行环境</a>
                 </p>
             </div>
         </li>
@@ -568,7 +567,7 @@
                     <span>3</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/06-Flink-从0到1/" title="从0到1学会Apache Flink-运行Flink程序">从0到1学会Apache Flink-运行Flink程序</a>
+                    <a href="/2019/03/04/07-Flink-从0到1/" title="从0到1学会Apache Flink-调试Flink程序">从0到1学会Apache Flink-调试Flink程序</a>
                 </p>
             </div>
         </li>
@@ -581,7 +580,7 @@
                     <span>4</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/04-Flink-从0到1/" title="从0到1学会Apache Flink-单机模式安装">从0到1学会Apache Flink-单机模式安装</a>
+                    <a href="/2019/03/04/05-Flink-从0到1/" title="从0到1学会Apache Flink-创建项目">从0到1学会Apache Flink-创建项目</a>
                 </p>
             </div>
         </li>
@@ -594,7 +593,7 @@
                     <span>5</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/07-Flink-从0到1/" title="从0到1学会Apache Flink-调试Flink程序">从0到1学会Apache Flink-调试Flink程序</a>
+                    <a href="/2019/03/04/06-Flink-从0到1/" title="从0到1学会Apache Flink-运行Flink程序">从0到1学会Apache Flink-运行Flink程序</a>
                 </p>
             </div>
         </li>
@@ -612,7 +611,7 @@
     <div class="cube-boxs">
         
         
-        <div class="cube-box ">
+        <div class="cube-box-bg ">
             <a href="/categories/flink/">#flink</a>
         </div>
         

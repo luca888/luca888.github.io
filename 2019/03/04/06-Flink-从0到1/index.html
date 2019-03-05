@@ -184,8 +184,7 @@
     
     <div class="cube-article-content cube-markdown">
         
-        <p>######运行Flink自带的example:</p>
-<blockquote>
+        <h6 id="运行Flink自带的example"><a href="#运行Flink自带的example" class="headerlink" title="运行Flink自带的example"></a>运行Flink自带的example</h6><blockquote>
 <p>cd flink-1.7.1</p>
 </blockquote>
 <blockquote>
@@ -198,7 +197,8 @@
 </blockquote>
 <p><img src="https://i.imgur.com/k0vRuio.png" alt></p>
 <a id="more"></a>
-<h2 id="编写SocketWindowWordCount程序"><a href="#编写SocketWindowWordCount程序" class="headerlink" title="######编写SocketWindowWordCount程序:"></a>######编写SocketWindowWordCount程序:</h2><p>在maven项目中创建SocketWindowWordCount.java:</p>
+<h6 id="编写SocketWindowWordCount程序"><a href="#编写SocketWindowWordCount程序" class="headerlink" title="编写SocketWindowWordCount程序"></a>编写SocketWindowWordCount程序</h6><hr>
+<p>在maven项目中创建SocketWindowWordCount.java:</p>
 <pre><code>package com.flink.stream;
 
 import org.apache.flink.api.common.functions.FlatMapFunction;
@@ -266,7 +266,8 @@ public static class WordWithCount {
 }
 </code></pre><p>项目结构:</p>
 <p><img src="https://i.imgur.com/YFOq21Q.png" alt></p>
-<h2 id="运行示例"><a href="#运行示例" class="headerlink" title="######运行示例:"></a>######运行示例:</h2><p>现在，我们将运行此Flink应用程序。它将从套接字读取文本，并且每5秒打印一次前5秒内每个不同单词的出现次数，即处理时间的翻滚窗口，只要文字漂浮在其中。</p>
+<h6 id="运行示例"><a href="#运行示例" class="headerlink" title="运行示例"></a>运行示例</h6><hr>
+<p>现在，我们将运行此Flink应用程序。它将从套接字读取文本，并且每5秒打印一次前5秒内每个不同单词的出现次数，即处理时间的翻滚窗口，只要文字漂浮在其中。</p>
 <ul>
 <li>首先，我们使用netcat来启动本地服务器</li>
 </ul>
@@ -293,7 +294,8 @@ public static class WordWithCount {
 <p>cat log/flink-<em>-taskexecutor-</em>.out</p>
 </blockquote>
 <p><img src="https://i.imgur.com/u1duXIe.png" alt></p>
-<h2 id="用flink-ui的方式提交任务"><a href="#用flink-ui的方式提交任务" class="headerlink" title="######用flink-ui的方式提交任务:"></a>######用flink-ui的方式提交任务:</h2><ul>
+<h6 id="用flink-ui的方式提交任务"><a href="#用flink-ui的方式提交任务" class="headerlink" title="用flink-ui的方式提交任务"></a>用flink-ui的方式提交任务</h6><hr>
+<ul>
 <li>首先，我们使用netcat来启动本地服务器</li>
 </ul>
 <blockquote>
@@ -323,8 +325,8 @@ public static class WordWithCount {
         
         
         <li class="next">
-            <a href="/2019/03/04/04-Flink-从0到1/">
-                从0到1学会Apache Flink-单机模式安装
+            <a href="/2019/03/04/01-Flink-从0到1/">
+                从0到1学会Flink-Flink介绍
                 <i class="cube-icon cube-next" aria-hidden="true"></i>
             </a>
         </li>
@@ -437,7 +439,7 @@ public static class WordWithCount {
                     <span>1</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/03-Flink-从0到1/" title="从0到1学会Apache Flink-分布式运行环境">从0到1学会Apache Flink-分布式运行环境</a>
+                    <a href="/2019/03/04/04-Flink-从0到1/" title="从0到1学会Apache Flink-单机模式安装">从0到1学会Apache Flink-单机模式安装</a>
                 </p>
             </div>
             
@@ -451,7 +453,7 @@ public static class WordWithCount {
                     <span>2</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/05-Flink-从0到1/" title="从0到1学会Apache Flink-创建项目">从0到1学会Apache Flink-创建项目</a>
+                    <a href="/2019/03/04/03-Flink-从0到1/" title="从0到1学会Apache Flink-分布式运行环境">从0到1学会Apache Flink-分布式运行环境</a>
                 </p>
             </div>
         </li>
@@ -464,7 +466,7 @@ public static class WordWithCount {
                     <span>3</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/06-Flink-从0到1/" title="从0到1学会Apache Flink-运行Flink程序">从0到1学会Apache Flink-运行Flink程序</a>
+                    <a href="/2019/03/04/07-Flink-从0到1/" title="从0到1学会Apache Flink-调试Flink程序">从0到1学会Apache Flink-调试Flink程序</a>
                 </p>
             </div>
         </li>
@@ -477,7 +479,7 @@ public static class WordWithCount {
                     <span>4</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/04-Flink-从0到1/" title="从0到1学会Apache Flink-单机模式安装">从0到1学会Apache Flink-单机模式安装</a>
+                    <a href="/2019/03/04/05-Flink-从0到1/" title="从0到1学会Apache Flink-创建项目">从0到1学会Apache Flink-创建项目</a>
                 </p>
             </div>
         </li>
@@ -490,7 +492,7 @@ public static class WordWithCount {
                     <span>5</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/07-Flink-从0到1/" title="从0到1学会Apache Flink-调试Flink程序">从0到1学会Apache Flink-调试Flink程序</a>
+                    <a href="/2019/03/04/06-Flink-从0到1/" title="从0到1学会Apache Flink-运行Flink程序">从0到1学会Apache Flink-运行Flink程序</a>
                 </p>
             </div>
         </li>
@@ -508,7 +510,7 @@ public static class WordWithCount {
     <div class="cube-boxs">
         
         
-        <div class="cube-box-bg ">
+        <div class="cube-box ">
             <a href="/categories/flink/">#flink</a>
         </div>
         
@@ -524,7 +526,7 @@ public static class WordWithCount {
     <div class="cube-boxs">
         
         
-        <div class="cube-box-bg ">
+        <div class="cube-box ">
             <a href="/tags/入门/">#入门</a>
         </div>
         

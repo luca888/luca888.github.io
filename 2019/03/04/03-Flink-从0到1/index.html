@@ -184,11 +184,9 @@
     
     <div class="cube-article-content cube-markdown">
         
-        <p>######Tasks and Operator Chains</p>
-<p>对于分布式执行，弗林克链运营商子任务一起放入任务。每个任务由一个线程执行。将运营商链接到任务是一项有用的优化：它可以减少线程到线程切换和缓冲的开销，并在降低延迟的同时提高整体吞吐量。可以配置链接行为; </p>
+        <h6 id="Tasks-and-Operator-Chains"><a href="#Tasks-and-Operator-Chains" class="headerlink" title="Tasks and Operator Chains"></a>Tasks and Operator Chains</h6><p>对于分布式执行，弗林克链运营商子任务一起放入任务。每个任务由一个线程执行。将运营商链接到任务是一项有用的优化：它可以减少线程到线程切换和缓冲的开销，并在降低延迟的同时提高整体吞吐量。可以配置链接行为; </p>
 <p>下图中的示例数据流由五个子任务执行，因此具有五个并行线程。<br><img src="https://i.imgur.com/1h1FWgz.png" alt></p>
-<p>######Job Managers, Task Managers, Clients</p>
-<a id="more"></a>
+<h6 id="Job-Managers-Task-Managers-Clients"><a href="#Job-Managers-Task-Managers-Clients" class="headerlink" title="Job Managers, Task Managers, Clients"></a>Job Managers, Task Managers, Clients</h6><a id="more"></a>
 <hr>
 <p>Flink运行时包含两种类型的进程：</p>
 <ul>
@@ -199,7 +197,8 @@
 </ul>
 <p>JobManagers和TaskManagers可以通过多种方式启动：作为独立集群直接在计算机上，在容器中，或由YARN或Mesos等资源框架管理。TaskManagers连接到JobManagers，宣布自己可用，并被分配工作。</p>
 <p>client 是不运行时和程序执行的一部分，而是被用来准备和发送的数据流的JobManager。之后，客户端可以断开连接或保持连接以接收进度报告。客户端既可以作为触发执行的Java / Scala程序的一部分运行，也可以在命令行进程中运行./bin/flink run …。<br><img src="https://i.imgur.com/3QQx6bM.png" alt></p>
-<h2 id="Task-Slots-and-Resources"><a href="#Task-Slots-and-Resources" class="headerlink" title="######Task Slots and Resources"></a>######Task Slots and Resources</h2><p>每个worker（TaskManager）都是一个JVM进程，可以在不同的线程中执行一个或多个子任务。为了控制工人接受的任务数量，工人有所谓的任务槽（至少一个）。</p>
+<h6 id="Task-Slots-and-Resources"><a href="#Task-Slots-and-Resources" class="headerlink" title="Task Slots and Resources"></a>Task Slots and Resources</h6><hr>
+<p>每个worker（TaskManager）都是一个JVM进程，可以在不同的线程中执行一个或多个子任务。为了控制工人接受的任务数量，工人有所谓的任务槽（至少一个）。</p>
 <p>每个任务槽代表TaskManager的固定资源子集。例如，具有三个插槽的TaskManager将其1/3的托管内存专用于每个插槽。切换资源意味着子任务不会与来自其他作业的子任务竞争托管内存，而是具有一定量的保留托管内存。请注意，这里没有CPU隔离; 当前插槽只分离任务的托管内存。</p>
 <p>通过调整任务槽的数量，用户可以定义子任务如何相互隔离。每个TaskManager有一个插槽意味着每个任务组在一个单独的JVM中运行（例如，可以在一个单独的容器中启动）。拥有多个插槽意味着更多子任务共享同一个JVM。同一JVM中的任务共享TCP连接（通过多路复用）和心跳消息。它们还可以共享数据集和数据结构，从而减少每任务开销。<br><img src="https://i.imgur.com/f4DF9rJ.png" alt></p>
 <p>默认情况下，Flink允许子任务共享插槽，即使它们是不同任务的子任务，只要它们来自同一个作业。结果是一个槽可以保存作业的整个管道。允许此插槽共享有两个主要好处：</p>
@@ -208,8 +207,10 @@
 <li>更容易获得更好的资源利用率。没有插槽共享，非密集 源/ map（）子任务将阻止与资源密集型窗口子任务一样多的资源。通过插槽共享，将示例中的基本并行性从2增加到6可以充分利用时隙资源，同时确保繁重的子任务在TaskManagers之间公平分配。</li>
 </ul>
 <p><img src="https://i.imgur.com/pGxEyYX.png" alt></p>
-<h2 id="State-Backends"><a href="#State-Backends" class="headerlink" title="######State Backends"></a>######State Backends</h2><p>存储键/值索引的确切数据结构取决于所选的状态后端。一个状态后端将数据存储在内存中的哈希映射中，另一个状态后端使用RocksDB作为键/值存储。除了定义保存状态的数据结构之外，状态后端还实现逻辑以获取键/值状态的时间点快照，并将该快照存储为检查点的一部分。<br><img src="https://i.imgur.com/VCx554j.png" alt></p>
-<h2 id="Savepoints"><a href="#Savepoints" class="headerlink" title="######Savepoints"></a>######Savepoints</h2><p>用Data Stream API编写的程序可以从保存点恢复执行。保存点允许更新程序和Flink群集，而不会丢失任何状态。</p>
+<h6 id="State-Backends"><a href="#State-Backends" class="headerlink" title="State Backends"></a>State Backends</h6><hr>
+<p>存储键/值索引的确切数据结构取决于所选的状态后端。一个状态后端将数据存储在内存中的哈希映射中，另一个状态后端使用RocksDB作为键/值存储。除了定义保存状态的数据结构之外，状态后端还实现逻辑以获取键/值状态的时间点快照，并将该快照存储为检查点的一部分。<br><img src="https://i.imgur.com/VCx554j.png" alt></p>
+<h6 id="Savepoints"><a href="#Savepoints" class="headerlink" title="Savepoints"></a>Savepoints</h6><hr>
+<p>用Data Stream API编写的程序可以从保存点恢复执行。保存点允许更新程序和Flink群集，而不会丢失任何状态。</p>
 <p>保存点是手动触发的检查点，它捕获程序的快照并将其写入状态后端。他们依靠常规的检查点机制。在执行期间，程序会定期在工作节点上创建快照并生成检查点。对于恢复，仅需要最后完成的检查点，并且一旦完成新检查点，就可以安全地丢弃旧检查点。</p>
 <p>保存点与这些定期检查点类似，不同之处在于它们由用户触发，并且在较新的检查点完成时不会自动过期。可以从命令行创建保存点，也可以通过REST API取消作业。</p>
 
@@ -219,10 +220,17 @@
 <div class="cube-article-nav">
     <ul>
         
+        <li class="prev">
+            <a href="/2019/03/04/04-Flink-从0到1/">
+                <i class="cube-icon cube-prev" aria-hidden="true"></i>
+                从0到1学会Apache Flink-单机模式安装
+            </a>
+        </li>
+        
         
         <li class="next">
-            <a href="/2019/03/04/05-Flink-从0到1/">
-                从0到1学会Apache Flink-创建项目
+            <a href="/2019/03/04/07-Flink-从0到1/">
+                从0到1学会Apache Flink-调试Flink程序
                 <i class="cube-icon cube-next" aria-hidden="true"></i>
             </a>
         </li>
@@ -335,7 +343,7 @@
                     <span>1</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/03-Flink-从0到1/" title="从0到1学会Apache Flink-分布式运行环境">从0到1学会Apache Flink-分布式运行环境</a>
+                    <a href="/2019/03/04/04-Flink-从0到1/" title="从0到1学会Apache Flink-单机模式安装">从0到1学会Apache Flink-单机模式安装</a>
                 </p>
             </div>
             
@@ -349,7 +357,7 @@
                     <span>2</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/05-Flink-从0到1/" title="从0到1学会Apache Flink-创建项目">从0到1学会Apache Flink-创建项目</a>
+                    <a href="/2019/03/04/03-Flink-从0到1/" title="从0到1学会Apache Flink-分布式运行环境">从0到1学会Apache Flink-分布式运行环境</a>
                 </p>
             </div>
         </li>
@@ -362,7 +370,7 @@
                     <span>3</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/06-Flink-从0到1/" title="从0到1学会Apache Flink-运行Flink程序">从0到1学会Apache Flink-运行Flink程序</a>
+                    <a href="/2019/03/04/07-Flink-从0到1/" title="从0到1学会Apache Flink-调试Flink程序">从0到1学会Apache Flink-调试Flink程序</a>
                 </p>
             </div>
         </li>
@@ -375,7 +383,7 @@
                     <span>4</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/04-Flink-从0到1/" title="从0到1学会Apache Flink-单机模式安装">从0到1学会Apache Flink-单机模式安装</a>
+                    <a href="/2019/03/04/05-Flink-从0到1/" title="从0到1学会Apache Flink-创建项目">从0到1学会Apache Flink-创建项目</a>
                 </p>
             </div>
         </li>
@@ -388,7 +396,7 @@
                     <span>5</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/07-Flink-从0到1/" title="从0到1学会Apache Flink-调试Flink程序">从0到1学会Apache Flink-调试Flink程序</a>
+                    <a href="/2019/03/04/06-Flink-从0到1/" title="从0到1学会Apache Flink-运行Flink程序">从0到1学会Apache Flink-运行Flink程序</a>
                 </p>
             </div>
         </li>
@@ -406,7 +414,7 @@
     <div class="cube-boxs">
         
         
-        <div class="cube-box ">
+        <div class="cube-box-bg ">
             <a href="/categories/flink/">#flink</a>
         </div>
         
