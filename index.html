@@ -166,9 +166,9 @@
     <div class="cube-content">
         <div class="cube-left">
             
-<div class="cube-excerpt" id="cube-excerpt-">
+<div class="cube-excerpt" id="cube-excerpt-从0到1学会Apache Flink-分布式运行环境">
     <header class="cube-excerpt-header">
-        <h1><a href="/2019/03/04/07-Flink-从0到1/"></a></h1>
+        <h1><a href="/2019/03/04/03-Flink-从0到1/">从0到1学会Apache Flink-分布式运行环境</a></h1>
         <div class="cube-excerpt-header-msg">
             <div class="cube-excerpt-date">
                 <i class="cube-icon cube-icon-date" aria-hidden="true"></i>
@@ -177,29 +177,28 @@
             <div class="cube-excerpt-tags">
                 <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
                 
+                <a href="/tags/入门/" class="cube-excerpt-tag-link">#入门</a>
+                
             </div>
         </div>
     </header>
     <article class="cube-excerpt-entry cube-markdown">
         
         
-           <h3 id="从0到1学会Apache-Flink-调试Flink程序"><a href="#从0到1学会Apache-Flink-调试Flink程序" class="headerlink" title="从0到1学会Apache Flink-调试Flink程序"></a>从0到1学会Apache Flink-调试Flink程序</h3><hr>
-<p>######安装flink本地模式<br>以win10为例:</p>
-<p>为了能够运行Flink，唯一的要求是安装一个有效的Java 8.x.</p>
-<p>下载Flink:</p>
-<blockquote>
-<p><a href="https://flink.apache.org/downloads.html#binaries" target="_blank" rel="noopener">https://flink.apache.org/downloads.html#binaries</a></p>
-</blockquote>
+           <p>######Tasks and Operator Chains</p>
+<p>对于分布式执行，弗林克链运营商子任务一起放入任务。每个任务由一个线程执行。将运营商链接到任务是一项有用的优化：它可以减少线程到线程切换和缓冲的开销，并在降低延迟的同时提高整体吞吐量。可以配置链接行为; </p>
+<p>下图中的示例数据流由五个子任务执行，因此具有五个并行线程。<br><img src="https://i.imgur.com/1h1FWgz.png" alt></p>
+<p>######Job Managers, Task Managers, Clients</p>
         
     </article>
     <footer class="cube-excerpt-footer">
-        <a class="cube-excerpt-more" href="/2019/03/04/07-Flink-从0到1/">Read More</a>
+        <a class="cube-excerpt-more" href="/2019/03/04/03-Flink-从0到1/">Read More</a>
     </footer>
 </div>
 
-<div class="cube-excerpt" id="cube-excerpt-">
+<div class="cube-excerpt" id="cube-excerpt-从0到1学会Apache Flink-创建项目">
     <header class="cube-excerpt-header">
-        <h1><a href="/2019/03/04/06-Flink-从0到1/"></a></h1>
+        <h1><a href="/2019/03/04/05-Flink-从0到1/">从0到1学会Apache Flink-创建项目</a></h1>
         <div class="cube-excerpt-header-msg">
             <div class="cube-excerpt-date">
                 <i class="cube-icon cube-icon-date" aria-hidden="true"></i>
@@ -208,43 +207,7 @@
             <div class="cube-excerpt-tags">
                 <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
                 
-            </div>
-        </div>
-    </header>
-    <article class="cube-excerpt-entry cube-markdown">
-        
-        
-           <h3 id="从0到1学会Apache-Flink-运行Flink程序"><a href="#从0到1学会Apache-Flink-运行Flink程序" class="headerlink" title="从0到1学会Apache Flink-运行Flink程序"></a>从0到1学会Apache Flink-运行Flink程序</h3><hr>
-<p>######运行Flink自带的example:</p>
-<blockquote>
-<p>cd flink-1.7.1</p>
-</blockquote>
-<blockquote>
-<p>./bin/flink run examples/streaming/WordCount.jar</p>
-</blockquote>
-<p><img src="https://i.imgur.com/7hbEWTD.png" alt></p>
-<p>查看运行结果:</p>
-<blockquote>
-<p>cat log/flink-<em>-taskexecutor-</em>.out</p>
-</blockquote>
-<p><img src="https://i.imgur.com/k0vRuio.png" alt></p>
-        
-    </article>
-    <footer class="cube-excerpt-footer">
-        <a class="cube-excerpt-more" href="/2019/03/04/06-Flink-从0到1/">Read More</a>
-    </footer>
-</div>
-
-<div class="cube-excerpt" id="cube-excerpt-">
-    <header class="cube-excerpt-header">
-        <h1><a href="/2019/03/04/05-Flink-从0到1/"></a></h1>
-        <div class="cube-excerpt-header-msg">
-            <div class="cube-excerpt-date">
-                <i class="cube-icon cube-icon-date" aria-hidden="true"></i>
-                2019-03-04
-            </div>
-            <div class="cube-excerpt-tags">
-                <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
+                <a href="/tags/入门/" class="cube-excerpt-tag-link">#入门</a>
                 
             </div>
         </div>
@@ -252,8 +215,7 @@
     <article class="cube-excerpt-entry cube-markdown">
         
         
-           <h3 id="从0到1学会Apache-Flink-创建项目"><a href="#从0到1学会Apache-Flink-创建项目" class="headerlink" title="从0到1学会Apache Flink-创建项目"></a>从0到1学会Apache Flink-创建项目</h3><hr>
-<p>######环境准备<br>已安装了Maven 3.0.4（或更高版本）和Java 8.x.</p>
+           <p>######环境准备<br>已安装了Maven 3.0.4（或更高版本）和Java 8.x.</p>
 <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="######创建项目:"></a>######创建项目:</h2><ul>
 <li>方法一</li>
 </ul>
@@ -279,9 +241,7 @@
             <div class="cube-excerpt-tags">
                 <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
                 
-                <a href="/tags/spark/" class="cube-excerpt-tag-link">#spark</a>
-                
-                <a href="/tags/sparkSQL/" class="cube-excerpt-tag-link">#sparkSQL</a>
+                <a href="/tags/入门/" class="cube-excerpt-tag-link">#入门</a>
                 
             </div>
         </div>
@@ -311,9 +271,9 @@
     </footer>
 </div>
 
-<div class="cube-excerpt" id="cube-excerpt-从0到1学会Apache Flink-分布式运行环境">
+<div class="cube-excerpt" id="cube-excerpt-从0到1学会Apache Flink-调试Flink程序">
     <header class="cube-excerpt-header">
-        <h1><a href="/2019/03/04/03-Flink-从0到1/">从0到1学会Apache Flink-分布式运行环境</a></h1>
+        <h1><a href="/2019/03/04/07-Flink-从0到1/">从0到1学会Apache Flink-调试Flink程序</a></h1>
         <div class="cube-excerpt-header-msg">
             <div class="cube-excerpt-date">
                 <i class="cube-icon cube-icon-date" aria-hidden="true"></i>
@@ -322,21 +282,63 @@
             <div class="cube-excerpt-tags">
                 <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
                 
+                <a href="/tags/入门/" class="cube-excerpt-tag-link">#入门</a>
+                
             </div>
         </div>
     </header>
     <article class="cube-excerpt-entry cube-markdown">
         
         
-           <p>category: “hexo”</p>
-<p>######Tasks and Operator Chains</p>
-<p>对于分布式执行，弗林克链运营商子任务一起放入任务。每个任务由一个线程执行。将运营商链接到任务是一项有用的优化：它可以减少线程到线程切换和缓冲的开销，并在降低延迟的同时提高整体吞吐量。可以配置链接行为; </p>
-<p>下图中的示例数据流由五个子任务执行，因此具有五个并行线程。<br><img src="https://i.imgur.com/1h1FWgz.png" alt></p>
-<p>######Job Managers, Task Managers, Clients</p>
+           <p>######安装flink本地模式<br>以win10为例:</p>
+<p>为了能够运行Flink，唯一的要求是安装一个有效的Java 8.x.</p>
+<p>下载Flink:</p>
+<blockquote>
+<p><a href="https://flink.apache.org/downloads.html#binaries" target="_blank" rel="noopener">https://flink.apache.org/downloads.html#binaries</a></p>
+</blockquote>
         
     </article>
     <footer class="cube-excerpt-footer">
-        <a class="cube-excerpt-more" href="/2019/03/04/03-Flink-从0到1/">Read More</a>
+        <a class="cube-excerpt-more" href="/2019/03/04/07-Flink-从0到1/">Read More</a>
+    </footer>
+</div>
+
+<div class="cube-excerpt" id="cube-excerpt-从0到1学会Apache Flink-运行Flink程序">
+    <header class="cube-excerpt-header">
+        <h1><a href="/2019/03/04/06-Flink-从0到1/">从0到1学会Apache Flink-运行Flink程序</a></h1>
+        <div class="cube-excerpt-header-msg">
+            <div class="cube-excerpt-date">
+                <i class="cube-icon cube-icon-date" aria-hidden="true"></i>
+                2019-03-04
+            </div>
+            <div class="cube-excerpt-tags">
+                <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
+                
+                <a href="/tags/入门/" class="cube-excerpt-tag-link">#入门</a>
+                
+            </div>
+        </div>
+    </header>
+    <article class="cube-excerpt-entry cube-markdown">
+        
+        
+           <p>######运行Flink自带的example:</p>
+<blockquote>
+<p>cd flink-1.7.1</p>
+</blockquote>
+<blockquote>
+<p>./bin/flink run examples/streaming/WordCount.jar</p>
+</blockquote>
+<p><img src="https://i.imgur.com/7hbEWTD.png" alt></p>
+<p>查看运行结果:</p>
+<blockquote>
+<p>cat log/flink-<em>-taskexecutor-</em>.out</p>
+</blockquote>
+<p><img src="https://i.imgur.com/k0vRuio.png" alt></p>
+        
+    </article>
+    <footer class="cube-excerpt-footer">
+        <a class="cube-excerpt-more" href="/2019/03/04/06-Flink-从0到1/">Read More</a>
     </footer>
 </div>
 
@@ -350,6 +352,8 @@
             </div>
             <div class="cube-excerpt-tags">
                 <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
+                
+                <a href="/tags/入门/" class="cube-excerpt-tag-link">#入门</a>
                 
             </div>
         </div>
@@ -376,6 +380,8 @@
             </div>
             <div class="cube-excerpt-tags">
                 <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
+                
+                <a href="/tags/入门/" class="cube-excerpt-tag-link">#入门</a>
                 
             </div>
         </div>
@@ -497,7 +503,7 @@
     
     <div class="count">
         <a class="count articles"><span>7</span>Article</a>
-        <a class="count tags"><span>2</span>Tags</a>
+        <a class="count tags"><span>1</span>Tags</a>
         <a class="count categories"><span>1</span>Categories</a>
     </div>
 </div>
@@ -535,7 +541,7 @@
                     <span>1</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/07-Flink-从0到1/" title></a>
+                    <a href="/2019/03/04/03-Flink-从0到1/" title="从0到1学会Apache Flink-分布式运行环境">从0到1学会Apache Flink-分布式运行环境</a>
                 </p>
             </div>
             
@@ -549,7 +555,7 @@
                     <span>2</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/06-Flink-从0到1/" title></a>
+                    <a href="/2019/03/04/05-Flink-从0到1/" title="从0到1学会Apache Flink-创建项目">从0到1学会Apache Flink-创建项目</a>
                 </p>
             </div>
         </li>
@@ -562,7 +568,7 @@
                     <span>3</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/05-Flink-从0到1/" title></a>
+                    <a href="/2019/03/04/04-Flink-从0到1/" title="从0到1学会Apache Flink-单机模式安装">从0到1学会Apache Flink-单机模式安装</a>
                 </p>
             </div>
         </li>
@@ -575,7 +581,7 @@
                     <span>4</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/04-Flink-从0到1/" title="从0到1学会Apache Flink-单机模式安装">从0到1学会Apache Flink-单机模式安装</a>
+                    <a href="/2019/03/04/07-Flink-从0到1/" title="从0到1学会Apache Flink-调试Flink程序">从0到1学会Apache Flink-调试Flink程序</a>
                 </p>
             </div>
         </li>
@@ -588,7 +594,7 @@
                     <span>5</span>
                 </p>
                 <p class="title">
-                    <a href="/2019/03/04/03-Flink-从0到1/" title="从0到1学会Apache Flink-分布式运行环境">从0到1学会Apache Flink-分布式运行环境</a>
+                    <a href="/2019/03/04/06-Flink-从0到1/" title="从0到1学会Apache Flink-运行Flink程序">从0到1学会Apache Flink-运行Flink程序</a>
                 </p>
             </div>
         </li>
@@ -607,7 +613,7 @@
         
         
         <div class="cube-box ">
-            <a href="/categories/hexo/">#hexo</a>
+            <a href="/categories/flink/">#flink</a>
         </div>
         
     </div>
@@ -622,13 +628,8 @@
     <div class="cube-boxs">
         
         
-        <div class="cube-box-bg ">
-            <a href="/tags/spark/">#spark</a>
-        </div>
-        
-        
         <div class="cube-box ">
-            <a href="/tags/sparkSQL/">#sparkSQL</a>
+            <a href="/tags/入门/">#入门</a>
         </div>
         
     </div>
